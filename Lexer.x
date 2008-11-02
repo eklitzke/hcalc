@@ -23,5 +23,5 @@ data Token =
     | Operator Char
     deriving (Eq, Show)
 
-lexer = alexScanTokens
+lex = alexScanTokens
 }

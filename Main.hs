@@ -1,17 +1,18 @@
 module Main where
 
+import Prelude hiding (lex)
 import Lexer
 import Parser
 
 reduceTree :: Exp -> Int
-reduceTree e =
-    case e of
-        Term a     -> a
-        Expr a b c -> (reduceTree a) + (reduceTree c)
-        otherwise  -> 0
+reduceTree (Term a) = a
+reduceTree (Expr a b c) =
+    let a' = reduceTree a
+        c' = reduceTree c in
+    case b of
+        Operator '+' -> a' + c'
+        Operator '-' -> a' - c'
+        Operator '*' -> a' * c'
+        Operator '/' -> a' `div` c'
 
-main = do
-    s <- getContents
-    let parsed = (parse . lexer) s
-    let x = reduceTree parsed
-    print x
+main = getContents >>= print . reduceTree . parse . lex
