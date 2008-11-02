@@ -7,7 +7,7 @@ reduceTree :: Exp -> Int
 reduceTree e =
     case e of
         Term a     -> a
-        --Expr a b c -> a + c
+        Expr a b c -> (reduceTree a) + (reduceTree c)
         otherwise  -> 0
 
 main = do
