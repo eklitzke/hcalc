@@ -5,7 +5,7 @@ Lexer.hs: Lexer.x
 	alex -g Lexer.x
 
 Parser.hs: Parser.y Lexer.hs
-	happy Parser.y
+	happy -a -c -g -s Parser.y
 
 clean:
 	-rm -f Lexer.hs Parser.hs *.o *.hi hcalc

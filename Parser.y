@@ -8,18 +8,29 @@ import Lexer
 %tokentype { Token }
 %error { parseError }
 
+
 %token
-	oper       { Operator $$ }
+	'+'        { Operator '+' }
+	'-'        { Operator '-' }
+	'*'        { Operator '*' }
+	'/'        { Operator '/' }
+	'('        { LParen }
+	')'        { RParen }
 	int        { Int $$ }
+
+%left  '+' '-'
+%right '*' '/'
+%right NEG
 
 %%
 
-Exp  : int oper int    { Expr (Term $1) (Operator $2) (Term $3) }
-	 | Exp oper int    { Expr $1 (Operator $2) (Term $3) }
-	 | int oper Exp    { Expr (Term $1) (Operator $2) $3 }
-	 | Exp oper Exp    { Expr $1 (Operator $2) $3 }
-
-Term : int             { Term $1 }
+Exp  : Exp '+' Exp        { Plus  $1 $3 }
+     | Exp '-' Exp        { Minus $1 $3 }
+     | Exp '*' Exp        { Times $1 $3 }
+     | Exp '/' Exp        { Div   $1 $3 }
+	 | '(' Exp ')'        { Paren $2 }
+	 | '-' Exp %prec NEG  { Negate $2 }
+	 | int                { Intg $1 }
 
 {
 
@@ -27,7 +38,12 @@ parseError :: [Token] -> a
 parseError _ = error "Parse error"
 
 data Exp =
-      Expr Exp Token Exp
-    | Term Int
+      Plus Exp Exp
+    | Minus Exp Exp
+    | Times Exp Exp
+    | Div Exp Exp
+    | Paren Exp
+    | Negate Exp
+    | Intg Int
     deriving (Show)
 }

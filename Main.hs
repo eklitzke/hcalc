@@ -4,15 +4,15 @@ import Prelude hiding (lex)
 import Lexer
 import Parser
 
-reduceTree :: Exp -> Int
-reduceTree (Term a) = a
-reduceTree (Expr a b c) =
-    let a' = reduceTree a
-        c' = reduceTree c in
-    case b of
-        Operator '+' -> a' + c'
-        Operator '-' -> a' - c'
-        Operator '*' -> a' * c'
-        Operator '/' -> a' `div` c'
+reduceExp :: Exp -> Int
+reduceExp e =
+    case e of
+        Plus   a b -> (reduceExp a) + (reduceExp b)
+        Minus  a b -> (reduceExp a) - (reduceExp b)
+        Times  a b -> (reduceExp a) * (reduceExp b)
+        Div    a b -> (reduceExp a) `div` (reduceExp b)
+        Paren  a   -> reduceExp a
+        Negate a   -> negate $ reduceExp a
+        Intg   a   -> a
 
-main = getContents >>= print . reduceTree . parse . lex
+main = getContents >>= print . reduceExp . parse . lex
