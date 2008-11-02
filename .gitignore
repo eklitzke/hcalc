@@ -1,2 +1,6 @@
 Lexer.hs
+Parser.hs
+hcalc
 .*.swp
+*.o
+*.hi

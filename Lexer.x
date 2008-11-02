@@ -1,5 +1,5 @@
 {
-module Main (main) where
+module Lexer where
 }
 
 %wrapper "basic"
@@ -23,6 +23,5 @@ data Token =
     | Operator Char
     deriving (Eq, Show)
 
-main = do s <- getContents
-          print (alexScanTokens s)
+lexer = alexScanTokens
 }
