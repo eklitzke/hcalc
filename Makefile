@@ -1,5 +1,5 @@
 hcalc: Lexer.hs Parser.hs Main.hs
-	ghc --make Main.hs -o hcalc
+	ghc -O2 --make Main.hs -o hcalc
 
 Lexer.hs: Lexer.x
 	alex -g Lexer.x
