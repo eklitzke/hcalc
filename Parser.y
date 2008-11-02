@@ -10,13 +10,13 @@ import Lexer
 
 
 %token
-	'+'        { Operator '+' }
-	'-'        { Operator '-' }
-	'*'        { Operator '*' }
-	'/'        { Operator '/' }
-	'('        { LParen }
-	')'        { RParen }
-	int        { Int $$ }
+    '+'        { Operator '+' }
+    '-'        { Operator '-' }
+    '*'        { Operator '*' }
+    '/'        { Operator '/' }
+    '('        { LParen }
+    ')'        { RParen }
+    int        { Int $$ }
 
 %left  '+' '-'
 %right '*' '/'
@@ -28,9 +28,9 @@ Exp  : Exp '+' Exp        { Plus  $1 $3 }
      | Exp '-' Exp        { Minus $1 $3 }
      | Exp '*' Exp        { Times $1 $3 }
      | Exp '/' Exp        { Div   $1 $3 }
-	 | '(' Exp ')'        { Paren $2 }
-	 | '-' Exp %prec NEG  { Negate $2 }
-	 | int                { Intg $1 }
+     | '(' Exp ')'        { Paren $2 }
+     | '-' Exp %prec NEG  { Negate $2 }
+     | int                { Intg $1 }
 
 {
 
