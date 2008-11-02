@@ -1,1 +1,3 @@
-a simple calculator using alex and happy
+A simple calculator using alex and happy. This is obviously a very contrived
+and indirect way to implement an expression calculator, but it might be useful
+to others learning alex/happy.
