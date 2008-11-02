@@ -9,3 +9,5 @@ Parser.hs: Parser.y Lexer.hs
 
 clean:
 	-rm -f Lexer.hs Parser.hs *.o *.hi hcalc
+
+.PHONY: clean
